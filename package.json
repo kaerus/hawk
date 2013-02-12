@@ -3,8 +3,8 @@
   "description": "HTTP Hawk Authentication Scheme",
   "version": "0.7.0",
   "author": "Eran Hammer <eran@hueniverse.com> (http://hueniverse.com)",
-  "contributors": [],
-  "repository": "git://github.com/hueniverse/hawk",
+  "contributors": ["Anders Elo <anders@kaerus.com> (http://kaerus.com)"],
+  "repository": "git://github.com/kaerus/hawk",
   "main": "index",
   "keywords": [
     "http",
@@ -14,12 +14,6 @@
   ],
   "engines": {
     "node": ">=0.8.0"
-  },
-  "dependencies": {
-    "hoek": "0.4.x",
-    "boom": "0.3.x",
-    "cryptiles": "0.1.x",
-    "sntp": "0.1.x"
   },
   "devDependencies": {
     "mocha": "1.x.x",
