@@ -1,8 +1,7 @@
 // Load modules
 
 var Http = require('http');
-var Request = require('request');
-var Hawk = require('../lib');
+var Hawk = require('../lib/hawk');
 
 
 // Declare internals
@@ -30,7 +29,6 @@ var credentialsFunc = function (id, callback) {
 // Create HTTP server
 
 var handler = function (req, res) {
-
     Hawk.authenticate(req, credentialsFunc, {}, function (err, credentials, attributes) {
 
         res.writeHead(!err ? 200 : 401, { 'Content-Type': 'text/plain' });
@@ -40,6 +38,62 @@ var handler = function (req, res) {
 
 Http.createServer(handler).listen(8000, '127.0.0.1');
 
+function Request(options,data,callback){ 
+    var url;
+
+    if(!callback) {
+        callback = data;
+        data = null;
+    } 
+       
+    if(typeof options === 'string') { 
+        url = Hawk.utils.parseURL(options);
+
+        if(!url) throw "Invalid request url";
+
+        options = {};
+    } else {
+        url = Hawk.utils.parseURL(options.uri);
+        delete options.uri; 
+    }
+    
+    options.hostname = url.hostname, 
+    options.port = url.port ? parseInt(url.port,10) : 80,
+    options.path = '/' + (url.path.string ? url.path.string : url.path);
+    if(!options.headers) options.headers = {};
+    options.headers["content-length"] = data ? data.length : 0; 
+
+    var xhr = Http.request(options,function(res) {
+
+        if(typeof res.data !== 'object') {
+            res.data = [];
+            res.on('data',function(data){
+                res.data[res.data.length] = data;
+            });
+        }   
+
+        res.on('end',function(){
+            var body;
+
+            if(res.data.length > 0) {
+                try {  
+                    body = JSON.parse(res.data.join(''));
+                } catch(e) {
+                    body = res.data.join('');
+                } 
+            }  
+
+            callback(res.statusCode>399,res,body);
+
+        });
+    }).on('error',function(error) { 
+        console.log("Request failed:", error);
+        callback(true,error);
+    });   
+
+    if(data) xhr.write(data);
+    xhr.end();              
+}
 
 // Send unauthenticated request
 
