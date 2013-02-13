@@ -57,8 +57,8 @@ function Request(options,data,callback){
         delete options.uri; 
     }
     
-    options.hostname = url.hostname, 
-    options.port = url.port ? parseInt(url.port,10) : 80,
+    options.hostname = url.hostname; 
+    options.port = url.port ? parseInt(url.port,10) : 80;
     options.path = '/' + (url.path.string ? url.path.string : url.path);
     if(!options.headers) options.headers = {};
     options.headers["content-length"] = data ? data.length : 0; 
