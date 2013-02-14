@@ -1,5 +1,11 @@
 ![hawk Logo](https://raw.github.com/hueniverse/hawk/master/images/hawk.png)
 
+
+NOTE: This is a port to bundle Hawk as a middleware in ArangoDB.
+In essence all external dependencies have been removed and all unused methods have been removed.
+Some minor adaptations and addons have been included to make it work properly under the ArangoDB framework.
+
+
 <img align="right" src="https://raw.github.com/hueniverse/hawk/master/images/logo.png" /> **Hawk** is an HTTP authentication scheme using a message authentication code (MAC) algorithm to provide partial
 HTTP request cryptographic verification. For more complex use cases such as access delegation, see [Oz](/hueniverse/oz).
 
