@@ -18,7 +18,8 @@
   "devDependencies": {
     "mocha": "1.x.x",
     "chai": "1.x.x",
-    "request": "2.12.x"
+    "webmake":">=0.3.14",
+    "uglify-js":">=2.2.3"
   },
   "scripts": {
     "test": "make test && make unit"
